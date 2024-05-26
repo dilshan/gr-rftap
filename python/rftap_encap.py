@@ -50,7 +50,7 @@ class rftap_encap(gr.basic_block):
 
     def handle_msg(self, pdu):
         if not pmt.is_pair(pdu):
-            print "rftap_encap: error: received invalid message type (not pair)", pdu
+            print("rftap_encap: error: received invalid message type (not pair)", pdu)
             return
 
         d = pmt.to_python(pmt.car(pdu))  # metadata (dict)
@@ -59,11 +59,11 @@ class rftap_encap(gr.basic_block):
         if not d: d = {}  # fix for pmt.to_python(pmt.to_pmt({})) returning None...
 
         if not isinstance(d, dict):
-            print "rftap_encap: error: unexpected metadata type (not dict)", pdu, repr(d)
+            print("rftap_encap: error: unexpected metadata type (not dict)", pdu, repr(d))
             return
 
         if not isinstance(vec, numpy.ndarray) or not vec.dtype==numpy.dtype('uint8'):
-            print "rftap_encap: error: unexpected PDU data type (not ndarray uint8)", pdu, repr(v)
+            print("rftap_encap: error: unexpected PDU data type (not ndarray uint8)", pdu, repr(v))
             return
 
         vec = vec.tostring()  # aka tobytes() (numpy1.9+)
@@ -71,85 +71,85 @@ class rftap_encap(gr.basic_block):
         flags = 0
 
         b = array.array('B');
-        hdr = struct.pack('<4sHH', 'RFta', 0, 0)  # len, flags written below
-        b.fromstring(hdr)
+        hdr = struct.pack('<4sHH'.encode('ascii'), 'RFta'.encode('ascii'), 0, 0)  # len, flags written below
+        b.fromlist(list(hdr))
 
         # this should be done in order of the bitfield:
 
         # dlt from PDU
         if self.encapsulation_from == 0:
             if 'dlt' not in d:
-                print "[ERROR] dlt is expected in PDU, but it is missing"
+                print("[ERROR] dlt is expected in PDU, but it is missing")
             else:
                 val = d.get('dlt')
-                if not isinstance(val, (int,long)):
-                    print "[ERROR] dlt in PDU is not an integer:", repr(val)
-                else:
-                    b.fromstring(struct.pack('<I', val))
+                if not isinstance(val, int):
+                    print("[ERROR] dlt in PDU is not an integer:", repr(val))
+                else:                    
+                    b.fromlist(list(struct.pack('<I'.encode('ascii'), val)))
                     flags |= 1
         # custom dlt
         elif self.encapsulation_from == 2:
             val = self.custom_dlt
-            if not isinstance(val, (int,long)):
-                print "[ERROR] custom dlt is not an integer:", repr(val)
-            else:
-                b.fromstring(struct.pack('<I', val))
+            if not isinstance(val, int):
+                print("[ERROR] custom dlt is not an integer:", repr(val))
+            else:                
+                b.fromlist(list(struct.pack('<I'.encode('ascii'), val)))
                 flags |= 1
 
         if 'freq' in d:
             val = d.get('freq')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] freq is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] freq is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<d', val))
+                b.fromlist(list(struct.pack('<d'.encode('ascii'), val)))
                 flags |= (1<<1)
 
         if 'nomfreq' in d:
             val = d.get('nomfreq')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] nomfreq is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] nomfreq is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<d', val))
+                b.fromlist(list(struct.pack('<d'.encode('ascii'), val)))
                 flags |= (1<<2)
 
         if 'freqofs' in d:
             val = d.get('freqofs')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] freqofs is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] freqofs is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<d', val))
+                b.fromlist(list(struct.pack('<d'.encode('ascii'), val)))
                 flags |= (1<<3)
 
         if 'power' in d:
             val = d.get('power')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] power is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] power is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<f', val))
+                b.fromlist(list(struct.pack('<f'.encode('ascii'), val)))
                 flags |= (1<<5)
 
         if 'noise' in d:
             val = d.get('noise')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] noise is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] noise is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<f', val))
+                b.fromlist(list(struct.pack('<f'.encode('ascii'), val)))
                 flags |= (1<<6)
 
         if 'snr' in d:
             val = d.get('snr')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] snr is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] snr is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<f', val))
+                b.fromlist(list(struct.pack('<f'.encode('ascii'), val)))
                 flags |= (1<<7)
 
         if 'qual' in d:
             val = d.get('qual')
-            if not isinstance(val, (float,int,long)):
-                print "[ERROR] qual is not a number:", repr(val)
+            if not isinstance(val, (float,int)):
+                print("[ERROR] qual is not a number:", repr(val))
             else:
-                b.fromstring(struct.pack('<f', val))
+                b.fromlist(list(struct.pack('<f'.encode('ascii'), val)))
                 flags |= (1<<8)
 
         # tagged parameters:
@@ -157,34 +157,34 @@ class rftap_encap(gr.basic_block):
         # dissector name from PDU
         if self.encapsulation_from == 1:
             if 'dissector' not in d:
-                print "[ERROR] dissector name is expected in PDU, but it is missing"
+                print("[ERROR] dissector name is expected in PDU, but it is missing")
             else:
                 val = d.get('dissector')
                 if not isinstance(val, bytes):
-                    print "[ERROR] dissector name in PDU is not a string:", repr(val)
+                    print("[ERROR] dissector name in PDU is not a string:", repr(val))
                 else:
-                    b.fromstring(struct.pack('<HBB', 16, len(val), 255))
-                    b.fromstring(val);
+                    b.fromlist(list(struct.pack('<HBB'.encode('ascii'), 16, len(val), 255)))
+                    b.fromlist(list(val.encode('ascii')))
                     padlen = 3 - ((len(val)+3)&3)
-                    b.fromstring('\0'*padlen)
+                    b.fromlist(list(('\0'*padlen).encode('ascii')))
         # custom dissector name
         elif self.encapsulation_from == 3:
             val = self.custom_dissector_name
-            if not isinstance(val, bytes):
-                print "[ERROR] custom dissector name is not a string:", repr(val)
+            if not isinstance(val, str):
+                print("[ERROR] custom dissector name is not a string:", repr(val))
             else:
-                b.fromstring(struct.pack('<HBB', 16, len(val), 255))
-                b.fromstring(val);
+                b.fromlist(list(struct.pack('<HBB'.encode('ascii'), 16, len(val), 255)))
+                b.fromlist(list(val.encode('ascii')))
                 padlen = 3 - ((len(val)+3)&3)
-                b.fromstring('\0'*padlen)
+                b.fromlist(list(('\0'*padlen).encode('ascii')))
 
         if len(b) % 4 != 0:
-            print "[ERROR] wrong padding!!!"
+            print("[ERROR] wrong padding!!!")
 
-        struct.pack_into('<H', b, 4, len(b)/4)
-        struct.pack_into('<H', b, 6, flags)
+        struct.pack_into('<H'.encode('ascii'), b, 4, int(len(b)/4))
+        struct.pack_into('<H'.encode('ascii'), b, 6, flags)
 
-        b.fromstring(vec)
+        b.fromlist(list(vec))
 
         pmt_v = pmt.init_u8vector(len(b), b)
         outpdu = pmt.cons(pmt.car(pdu), pmt_v)

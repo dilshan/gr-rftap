@@ -1,7 +1,6 @@
 -- lua wireshark dissector for RDS (Radio Data System)
 
 -- put this file in: ~/.config/wireshark/plugins/rds.lua
--- or in (old location): ~/.wireshark/plugins/rds.lua
 
 -- Specifications: http://www.nrscstandards.org/sg/nrsc-4-b.pdf
 -- https://en.wikipedia.org/wiki/Radio_Data_System

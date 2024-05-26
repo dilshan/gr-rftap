@@ -31,5 +31,5 @@ except ImportError:
 	pass
 
 # import any pure python here
-from rftap_encap import rftap_encap
+from .rftap_encap import rftap_encap
 #

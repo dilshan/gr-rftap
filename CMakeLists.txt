@@ -67,9 +67,9 @@ set(Boost_ADDITIONAL_VERSIONS
     "1.50.0" "1.50" "1.51.0" "1.51" "1.52.0" "1.52" "1.53.0" "1.53" "1.54.0" "1.54"
     "1.55.0" "1.55" "1.56.0" "1.56" "1.57.0" "1.57" "1.58.0" "1.58" "1.59.0" "1.59"
     "1.60.0" "1.60" "1.61.0" "1.61" "1.62.0" "1.62" "1.63.0" "1.63" "1.64.0" "1.64"
-    "1.65.0" "1.65" "1.66.0" "1.66" "1.67.0" "1.67" "1.68.0" "1.68" "1.69.0" "1.69"
+    "1.65.0" "1.65" "1.66.0" "1.66" "1.67.0" "1.67" "1.68.0" "1.68" "1.69.0" "1.74"
 )
-find_package(Boost "1.35" COMPONENTS filesystem system)
+find_package(Boost "1.74.0" REQUIRED)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost required to compile rftap")
@@ -123,7 +123,7 @@ find_package(Doxygen)
 # caps such as FILTER or FFT) and change the version to the minimum
 # API compatible version required.
 set(GR_REQUIRED_COMPONENTS RUNTIME)
-find_package(Gnuradio "3.7.2" REQUIRED)
+find_package(Gnuradio "3.10.1" REQUIRED)
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
 include(GrVersion)
 

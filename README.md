@@ -18,15 +18,11 @@ There are several ways to install GNU Radio. You can use
 - [pre-combiled binaries](http://gnuradio.org/redmine/projects/gnuradio/wiki/BinaryPackages)
 - [from source](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGRFromSource)
 
-### Simple Installation of gr-rftap using Package Manager
-
-    pybombs install gr-rftap
-
 ### Manual Installation of gr-rftap
 
 To manually install the blocks do
 
-    git clone https://github.com/rftap/gr-rftap
+    git clone git@github.com:dilshan/gr-rftap.git
     cd gr-rftap
     mkdir build
     cd build
