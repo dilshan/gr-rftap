@@ -14,9 +14,20 @@ See: https://rftap.github.io/
 
 There are several ways to install GNU Radio. You can use
 
-- [pybombs](http://gnuradio.org/redmine/projects/pybombs/wiki) (recommended)
-- [pre-combiled binaries](http://gnuradio.org/redmine/projects/gnuradio/wiki/BinaryPackages)
-- [from source](http://gnuradio.org/redmine/projects/gnuradio/wiki/InstallingGRFromSource)
+#### Prebuilt Binaries
+
+The recommended way to install GNU Radio on most platforms is using available binary package distributions. 
+
+The following command is for Debian, Ubuntu, and derivatives. Consult your distribution information to obtain the version of GNU Radio which is included.
+
+    sudo apt install gnuradio
+
+For other operating systems and versions, see [Quick Start](https://wiki.gnuradio.org/index.php/InstallingGR#Quick_Start)
+
+#### From Source
+
+Complete instructions for building GNU Radio from source code are detailed in 
+[Installing From Source](https://wiki.gnuradio.org/index.php?title=LinuxInstall#From_Source). 
 
 ### Manual Installation of gr-rftap
 
