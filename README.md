@@ -33,7 +33,7 @@ Complete instructions for building GNU Radio from source code are detailed in
 
 To manually install the blocks do
 
-    git clone git@github.com:dilshan/gr-rftap.git
+    git clone https://github.com/dilshan/gr-rftap.git
     cd gr-rftap
     mkdir build
     cd build
